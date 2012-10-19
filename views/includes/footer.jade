@@ -1,0 +1,35 @@
+div.footerCont
+	div.footer.size6
+		div.size2.floatLeft
+			ul.rightBorder
+				li
+					h5 #{__i('how to start?')}
+					ul
+						li
+							span #{__i('register to the site')}
+						li
+							span #{__i('and access available applications')}
+						li
+							span #{__i('registration is mandatory, so you can store your own settings for applications')}
+					//-
+						span.textMini * #{__i('under development, not yet available')}
+		div.size2.floatLeft
+			ul.rightBorder
+				li
+					h5 #{__i('links')}
+					ul
+						li
+							span #{__i('polenta source code and info on')}
+								a(href='https://github.com/obliquid/polenta', target='_blank') github
+						li
+							span #{__i('created by')}:
+								a(href='mailto:federico-at-obliquid.it') federico carrara
+						li
+							span #{__i('created')} at:
+							a(href='http://obliquid.org', target='_blank', style='width:55px;height:45px;padding:5px;margin:0px;display:inline-block;background-image:none;')
+								img(src='/images/logo/main_logo_transp_60x45.png')
+		div.size2.floatLeft
+			ul
+				li
+					include disclaimer
+		div.clear

@@ -1,0 +1,30 @@
+.formRow
+	h5.formLabel &nbsp;#{__i('status')}
+		span.formError *
+	div.clear
+	if (element.status == 'private' )
+		input(type='radio', name='status', value='private', title='#{__i("can be viewed only by you")}', checked=true)
+	else
+		input(type='radio', name='status', value='private', title='#{__i("can be viewed only by you")}')
+	span #{__i('private')}&nbsp;
+	div.privateBg.privateButton.statusIcon.floatRight
+	br
+	span.textMini #{__i('can be viewed only by you')}
+	hr
+	if (element.status == 'public' )
+		input(type='radio', name='status', value='public', title='#{__i("can be viewed only by you, and is published in your sites")}', checked=true) 
+	else
+		input(type='radio', name='status', value='public', title='#{__i("can be viewed only by you, and is published in your sites")}') 
+	span #{__i('public')}&nbsp;
+	div.publicBg.privateButton.statusIcon.floatRight
+	br
+	span.textMini #{__i('can be viewed only by you, and is published in your sites')}
+	hr
+	if ( element.status != 'public' && element.status != 'private' ) 
+		input(type='radio', name='status', value='share', title='#{__i("viewed by everyone, and shareable")}', checked=true) 
+	else
+		input(type='radio', name='status', value='share', title='#{__i("viewed by everyone, and shareable")}') 
+	span #{__i('share')}&nbsp;
+	div.shareBg.privateButton.statusIcon.floatRight
+	br
+	span.textMini #{__i('viewed by everyone, and shareable')}

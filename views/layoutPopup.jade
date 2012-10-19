@@ -1,0 +1,17 @@
+!!!
+html
+	head
+		include includes/layoutHeadersCommon
+	body
+		//- nei popup devo eliminare un padding-bottom che mi arriva dai css
+		style
+			html {
+				padding-bottom: 0px;
+			}
+		//- include includes/header
+		//- if session.loggedIn
+		//- include includes/headerAdmin
+		div.bodyPopup
+			div.body!= body //- la variabile body contiene il template principale della pagina (unescaped, altrimenti visualizza i tag html)
+		//- include includes/footer
+	

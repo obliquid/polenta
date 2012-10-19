@@ -1,0 +1,4 @@
+div.elemGridAdminCont
+	- if ( typeof element.elementStatus == 'undefined' ) element.elementStatus = element.status
+	div(class='#{element.elementStatus}Bg', title='#{__i(element.elementStatus)}').privateButton.statusIcon
+	

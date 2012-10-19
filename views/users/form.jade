@@ -1,0 +1,133 @@
+script
+	function validate_elementForm()
+	{
+		if( $('#name').val() == '' )
+		{
+			alert("#{__i('name is required')}");
+			return false;
+		}
+		if( $('#email').val() == '' )
+		{
+			alert("#{__i('email is required')}");
+			return false;
+		}
+		var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		if( !emailPattern.test($('#email').val()) )
+		{
+			alert("#{__i('email is not valid')}");
+			return false;
+		}
+		if( $('#password').val() == '' )
+		{
+			alert("#{__i('password is required')}");
+			return false;
+		}
+		if( $('#retype_password').val() != $('#password').val() )
+		{
+			alert("#{__i('retype password not matching')}");
+			return false;
+		}
+		if( $('#retype_new_password').val() != $('#new_password').val() )
+		{
+			alert("#{__i('retype password not matching')}");
+			return false;
+		}
+	}
+
+img(src='/images/pov/icon_core_role_60x45.png').floatLeft
+include ../includes/formHeader
+
+form(method='post', action='/#{elementName}s/edit/#{element._id || ""}', onsubmit='return validate_elementForm()' )
+	//- non visualizzo il submitTop perchè ho il qaptcha su quello Bottom
+		include ../includes/formSubmitTop
+	div.size4.floatLeft
+		div.mainColLeft
+			h4.alignLeft #{__i('your profile')}
+			.formRow
+				h5.formLabel #{__i('name')}
+					span.formError *
+				input(id='name', name='name', value='#{element.name || ""}').size3
+			.formRow
+				h5.formLabel #{__i('profile')}
+					span.formError &nbsp;
+				textarea(name='profile').size3 #{element.profile || ''}
+			.formRow
+				h5.formLabel email
+				span.formError *
+				input(id='email', name='email', value='#{element.email || ""}').size3
+				p #{__i('email is also used to signin')}
+				span.textMini #{__i('right now no validation email is sent to your email address, but maybe will happen in the future')}
+			//- se è un nuovo utente, è obbligatorio inserire la pw
+			//- se è un modify, la pw viene inserita solo per cambiarla
+			if (typeof element._id === 'undefined' || element._id == '' )
+				.formRow
+					h5.formLabel password
+						span.formError *
+					input(type='password', id='password', name='password', value='#{element.password || ""}').size3
+				.formRow
+					h5.formLabel #{__i('retype')} password
+						span.formError *
+					input(type='password', id='retype_password', name='retype_password').size3
+			else
+				hr
+				h4 #{__i('change password')}
+				p #{__i('compile this only to change password; to keep current password leave this blank.')}
+				p #{__i("after changing password or email, you'll be forced to login again with new credentials.")}
+				.formRow
+					h5.formLabel #{__i('new password')}
+						span.formError *
+					input(type='password', id='new_password', name='new_password').size3
+				.formRow
+					h5.formLabel #{__i('retype password')}
+						span.formError *
+					input(type='password', id='retype_new_password', name='retype_new_password').size3
+			hr
+			.outerCont.alignLeft
+				.medium_padding
+					include ../includes/disclaimer
+					p.formError #{__i('by clicking the SAVE button you implicitly declare to have read and accepted everything stated in this disclaimer')}
+					hr
+					p.formError #{__i('and... remember to unlock slider to save!')}
+	//- nota: non si può usare 	'include ../includes/formStatus' perchè lo status degli user ha solo public e private
+	div.size2.floatLeft
+		div.mainColRight
+			.formRow
+				h5.formLabel &nbsp;#{__i('status')}
+					span.formError *
+				div.clear
+				if (element.status != 'private' )
+					input(type='radio', name='status', value='public', title='#{__i("you are visible by other users")}', checked=true) 
+				else
+					input(type='radio', name='status', value='public', title='#{__i("you are visible by other users")}') 
+				span #{__i('public')}&nbsp;
+				div.publicBg.privateButton.statusIcon.floatRight
+				br
+				span.textMini #{__i('you are visible by other users')}
+				hr
+				if (element.status == 'private' )
+					input(type='radio', name='status', value='private', title='#{__i("you are invisible")}', checked=true)
+				else
+					input(type='radio', name='status', value='private', title='#{__i("you are invisible")}')
+				span #{__i('private')}&nbsp;
+				div.privateBg.privateButton.statusIcon.floatRight
+				br
+				span.textMini #{__i('you are invisible')}
+				
+	div.clear
+
+	include ../includes/formSubmitBottom
+
+	//- solo nel caso degli user il tasto save è bloccato da un captcha
+	p.floatLeft #{__i('security note: this form is locked! to unlock it just slide to the right the cursor below:')}
+	div.clear
+	div.QapTcha
+	div.clear
+
+	script(language='JavaScript', type='text/javascript', src='/javascripts/jq/jquery-ui.js')
+	script(language='JavaScript', type='text/javascript', src='/javascripts/jq/jquery.ui.touch.js')
+	script(language='JavaScript', type='text/javascript', src='/javascripts/jq/qaptcha/QapTcha.jquery.js')
+	script
+		$(document).ready(function() {
+			// Simple call
+			$('.QapTcha').QapTcha({txtLock:'#{__i('locked')}',txtUnlock:'#{__i('unlocked: now you can save')}'});
+		});

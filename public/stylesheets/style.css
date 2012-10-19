@@ -1,0 +1,1346 @@
+/**
+ * polenta
+ * 
+ * 
+ * polenta is something like a framework, aimed at expermineting with 
+ * new W3C File API for javascript. polenta is based on node + express
+ * + mongodb, and implements MVC pattern. *
+ *
+ * Copyright (C) 2012 Federico Carrara (federico@obliquid.it)
+ *
+ * For more information http://obliquid.org/
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
+
+
+/* FONTS */
+
+@font-face {
+  font-family: TitlesFont;
+  src: url('../fonts/ubuntu/Ubuntu-B.ttf');
+  /* src: url('../fonts/HelveticaNeue-HeavyItalic.ttf'); */
+}
+
+@font-face {
+  font-family: TextsFont;
+  src: url('../fonts/ubuntu/Ubuntu-R.ttf');
+  /* src: url('../fonts/HelveticaNeue-LightExt.ttf'); */
+}
+
+h1, h2, h3, h4, h5, h6, a, input, select, textarea, b, .jstree
+{
+	/* font-family: Arial, Helvetica, sans-serif; */
+	/*font-family: TitlesFont, Arial, Helvetica, sans-serif;*/
+	font-family: TitlesFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	line-height:100%;
+}
+
+html, body, p, span
+{
+	/* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+	/* font-family: TextsFont, 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+	font-family: TextsFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	line-height:100%;
+}
+
+
+
+
+/* MAIN STYLES */
+
+html
+{
+	background-image:url('../images/bg/main_bg.jpg');
+	/* background-attachment:fixed; */
+	background-color: white;
+	padding: 0px;
+	padding-bottom: 50px;
+	margin: 0px;
+}
+
+body, input, select, textarea, .jstree
+{
+	font-weight:normal;
+	font-size:14px;
+	color:#444;
+	padding: 0px;
+	margin: 0px;
+}
+
+img
+{
+	border:0;
+}
+
+
+
+
+
+
+/* texts and titles */
+
+h1
+{
+	font-weight:normal;
+	font-size:90px;
+	line-height: 80px;
+	letter-spacing: -5px;
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 35px;
+}
+
+h2 
+{
+	font-weight:normal;
+	font-size:69px;
+	line-height: 56px;
+	letter-spacing: -3px;
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 25px;
+}
+
+h3 
+{
+	font-weight:normal;
+	font-size:52px;
+	line-height: 45px;
+	letter-spacing: -2px;
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 20px;
+}
+
+h4 
+{
+	font-size: 30px;
+	font-weight: normal;
+	line-height: 27px;
+	letter-spacing: -1px;
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 20px;
+}
+
+h5,
+.formChoice
+{
+	font-size: 22px;
+	font-weight: normal;
+	line-height: 20px;
+	letter-spacing: 0px;
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 10px;
+}
+
+h6
+{
+	font-size: 16px;
+	font-weight: normal;
+	letter-spacing: 0px;
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 5px;
+}
+
+
+
+/* links */
+
+a
+{
+}
+
+a:hover
+{
+}
+
+
+
+
+
+
+/* forms */
+
+input, select
+{
+	height: 26px; /* più 4 di padding fa 30 */
+}
+input[type="radio"] {
+	height: 12px;
+} 
+textarea
+{
+	height: 120px;
+}
+input.disabled:hover {
+	background-color: transparent;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	cursor: default;
+}
+
+
+/* lists */
+
+ul
+{
+	padding-left: 10px;
+}
+
+li
+{
+	margin-bottom: 10px;
+}
+
+
+/* other */
+hr
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: transparent;
+	background-color: transparent;
+	border: none;
+	height: 0px;
+	/* border-top: 2px dotted #666; */
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #999;
+}
+
+pre
+{
+	margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* COMMON STYLES */
+/* generic styles useful for differents elements and in different contexts */
+
+/* grid units */
+.sizeQuarter
+{
+	width: 40px;
+}
+.sizeHalf
+{
+	width: 80px;
+}
+.sizeHalfAndQuarter
+{
+	width: 120px;
+}
+.size1
+{
+	width: 160px;
+}
+.size1AndHalf
+{
+	width: 240px;
+}
+.size2
+{
+	width: 320px;
+}
+.size3
+{
+	width: 480px;
+}
+.size4
+{
+	width: 640px;
+}
+.size5
+{
+	width: 800px;
+}
+.size6
+{
+	width: 960px;
+}
+
+/* corporate color A (green) */
+a:hover,
+input:hover,
+select:hover,
+textarea:hover,
+.formSuccess,
+.linkSelected,
+.elementButton:hover,
+.elementButtonSelected,
+.QapTcha .bgSlider:hover,
+.QapTcha .dropSuccess
+{
+	background-color: #66aa66;
+}
+/*.QapTcha .dropSuccess {
+	color: #66aa66;
+}*/
+a.outerCont:hover
+{
+	background-image: none;
+}
+
+
+
+/* corporate color B (orange) */
+.warning,
+.formError,
+.QapTcha .dropError
+{
+	color: #E57200;
+}
+.adminButton,
+.adminIcon,
+#vakata-contextmenu {
+	background-color: #E57200;
+}
+
+/* corporate color B (dark orange) */
+.adminButton:hover
+{
+	background-color: #874300;
+}
+
+
+/* dark grey for texts */
+input.disabled,
+input.disabled:hover {
+	color: #666666;
+}
+
+/* light grey for backgrounds */
+.paginationButton,
+.elementButton,
+.lightGreyBg
+{
+	background-color: #9C9C9C;
+}
+.innerContOutline,
+.formRow
+{
+	border: 2px dotted #9C9C9C;
+}
+.rightBorder,
+.mainColLeft,
+.contentListColumn
+{
+	border-right: 2px dotted #9C9C9C;
+}
+.tabsButtonsCont,
+.tabsButtonsContMini
+{
+	border-bottom: 2px dotted #9C9C9C;
+}
+.tabButton,
+.tabButtonMini
+{
+	border: 2px dotted #9C9C9C;
+}
+
+/* colors used for status */
+.redBg,
+.privateBg
+{
+	background-color: #ED2024;
+}
+.blueBg,
+.publicBg
+{
+	background-color: #3953A4;
+}
+.greenBg,
+.shareBg
+{
+	background-color: #69BD45;
+}
+
+
+
+/* common texts formatting */
+
+.textMini
+{
+	font-size:12px;
+}
+.textBig
+{
+	font-size:32px;
+}
+.textSuperBig
+{
+	font-size:48px;
+}
+
+.code {
+	font-family:monospace;
+	font-weight:bold;
+	font-size:15px;
+	text-align: left;
+	/* font-family: "Courier New", Courier, monospace; */
+	padding: 10px;
+}
+
+
+/* links and buttons */
+a,
+input, select,
+textarea
+{
+	color:#000000;
+	background-color:transparent;
+	background-image:url('../images/bg/nero20perc.png');
+	background-repeat:repeat;
+	text-decoration:none;
+	border: none;
+	cursor:pointer;
+}
+
+/* links and buttons neg/hover */
+/* (the bg is defined above) */
+a:hover,
+input:hover,
+select:hover,
+textarea:hover,
+.formSuccess,
+.linkSelected,
+.QapTcha .bgSlider:hover
+{
+	color:#ffffff;
+	text-decoration:none;
+	-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+	-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* links and buttons selected */
+.linkSelected
+{
+}
+
+/* MINIMUMS */
+
+/* minimum padding */
+a,
+input, select,
+textarea,
+.minimum_padding,
+.linkSelected, .jstree
+{
+	padding: 2px 6px;
+}
+
+/* minimum margin */
+a,
+span,
+input, select,
+textarea,
+.minimum_margin, .jstree
+{
+	margin: 2px;
+}
+
+/* MEDIUMS */
+
+/* medium padding */
+.medium_padding
+{
+	padding: 10px;
+}
+
+/* medium margin */
+p,
+ul,
+.medium_margin
+{
+	margin: 10px 2px;
+}
+
+/* right align */
+form
+{
+	text-align: right;
+}
+
+/* box shadow */
+.outerCont,
+.helpCont
+{
+	-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+	-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* rounded corners */
+.rounded,
+a,
+input, select,
+textarea,
+.outerCont,
+.outerContMinimal,
+.innerCont,
+.code,
+.innerContOutline,
+.helpCont,
+.adminIcon,
+.statusIcon,
+.formSuccess,
+.formSubRow,
+.linkSelected,
+.formRow, .detailRow, .jstree, #vakata-contextmenu,
+#simplemodal-container,
+.simplemodal-wrap,
+.simplemodal-data,
+.elementButton,
+.QapTcha .bgSlider,
+.QapTcha .dropSuccess,
+.imageDetail,
+.imageList
+{
+	border-radius: 14px; 
+	-moz-border-radius: 14px; 
+	-webkit-border-radius: 14px;	
+	
+	/*
+	border-top-right-radius: 0px;
+	-moz-border-radius-topright: 0px;
+	-webkit-border-top-right-radius: 0px;
+	*/
+	
+	
+	border-top-left-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-left-radius: 0px;
+	
+	
+	/*
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	*/
+	
+	/*
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	*/
+	
+	
+}
+
+/* text shadow */
+h1, h2, h3, h4, h5, h6, p, html, body, a, input, input.disabled:hover, select, textarea
+{
+	text-shadow: rgba(255,255,255, 0.9) 0px 1px 0px;
+}
+
+
+/* text shadow inverted */
+a:hover,
+a:hover h1,
+a:hover h2,
+a:hover h3,
+a:hover h4,
+a:hover h5,
+a:hover h6,
+input:hover,
+select:hover,
+textarea:hover,
+.formSuccess,
+.linkSelected,
+.QapTcha .dropSuccess,
+.tabButtonSelected
+{
+	text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 0px;
+}
+
+
+/* display */
+
+.invisible
+{
+	display: none;
+	width: 0px;
+	height: 0px;
+	margin: 0px;
+	padding: 0px;
+	boder: 0px;
+}
+
+.displayNone
+{
+	display: none;
+}
+
+/* floats */
+
+.floatLeft,
+.contentListColumn
+{
+	float: left;
+}
+
+.floatRight,
+.formSubRow
+{
+	float: right;
+}
+
+.clear
+{
+	clear: both;
+}
+
+/* columns */
+.rightBorder {
+	margin-right: 10px;
+	padding-right: 10px;
+}
+.contentListColumn {
+	display: inline-block;
+	width: 90px;
+	margin-right: 5px;
+	overflow: hidden;
+}
+
+/* aligns */
+
+.alignLeft {
+	text-align: left;
+}
+.alignRight {
+	text-align: right;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CUSTOM CLASSES */
+/* styles dedicated to specific elements */
+
+.outerCont,
+.helpCont
+{
+	display:inline-block;
+	overflow: hidden;
+	padding:5px;
+	margin-top:0px;
+	margin-left:0px;
+	margin-right:5px;
+	margin-bottom:5px;
+	background-image:url('../images/bg/bianco66perc.png');
+	background-repeat:repeat;
+}
+.helpCont
+{
+	margin-top:10px;
+	padding: 10px;
+}
+.elemGrid.outerCont
+{
+	display: block;
+}
+.outerContMinimal
+{
+	padding:5px;
+	margin-top:0px;
+	margin-left:0px;
+	margin-right:10px;
+	margin-bottom:10px;
+	/* border: 2px solid #e8e8e8; */
+	background-image:url('../images/bg/bianco33perc.png');
+	background-repeat:repeat;
+}
+
+.innerCont,
+.innerContOutline,
+.code,
+.formSubRow
+{
+	display: block;
+	background-image:url('../images/bg/nero20perc.png');
+	background-repeat:repeat;
+	/*
+	padding: 10px 5px;
+	margin-top: 4px;
+	margin-bottom: 5px;
+	*/
+	padding: 3px;
+	margin: 0px;
+	margin-top: 5px;
+	overflow: hidden;
+}
+.innerContOutline {
+	background-image:none;
+	padding: 1px;
+}
+
+
+.headerCont
+{
+	background-image:url('../images/bg/ombraTop.png');
+	background-repeat:repeat-x;
+	background-position:center bottom;	
+	margin: 0px;
+	padding: 5px 0px;
+}
+.footerCont
+{
+	background-image:url('../images/bg/ombraBottom.png');
+	background-repeat:repeat-x;
+	background-position:center top;
+	margin: 0px;
+	padding: 0px;
+	padding-top: 10px;
+}
+.headerAdminCont
+{
+	background-image:url('../images/bg/ombraTop.png');
+	background-repeat:repeat-x;
+	background-position:center bottom;
+	margin: 0px;
+	padding: 0px;
+	padding-bottom: 5px;
+}
+.headerAdminCont
+{
+	padding-top: 5px;
+}
+.bodyCont
+{
+	background-image:url('../images/bg/nero10perc.png');
+	background-repeat:repeat;
+	margin: 0px;
+	padding: 0px;
+}
+.bodyPopup
+{
+	background-image:url('../images/bg/nero15perc.png');
+	background-repeat:repeat;
+	margin: 0px;
+	padding: 0px 20px;
+}
+.header
+{
+	margin: 0 auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.headerAdmin
+{
+	margin: 0 auto;
+	padding: 5px;
+}
+.headerStatus
+{
+	margin: 0 auto;
+	padding: 0px;
+}
+.headerStatusSignedIn
+{
+	height: 20px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.headerStatusSignedOut
+{
+	height: 36px;
+}
+.footer
+{
+	margin: 0 auto;
+	padding-top: 10px;
+}
+.feedback
+{
+	margin: 0 auto;
+	padding-top: 5px;
+	padding-bottom: 10px;
+}
+.body
+{
+	clear:both;
+	margin: 0 auto;
+	padding-top: 15px;
+	padding-bottom: 20px;
+	position: relative;
+}
+.mainColLeft {
+	padding-right: 10px;
+	margin-right: 10px;
+	/* overflow: hidden; */
+}
+.mainColRight {
+	
+}
+.logoLabel
+{
+	margin: 0px;
+	letter-spacing: -4px;
+}
+.code {
+	overflow:auto;
+	/* no perchè lo uso anche su elementi che hanno un proprio margin
+	margin-top: 10px;
+	margin-bottom: 10px;
+	*/
+}
+
+/* element in a grid view */
+
+.elemGrid
+{
+	height: 120px;
+	position: relative;
+}
+.elemGridAdminCont
+{
+	position: absolute;
+	top: 7px;
+	right: 5px;
+	
+}
+
+/* element in a list view */
+
+
+/*
+.pageTitle
+{
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+	border-top: 2px dotted #666;
+}
+*/
+
+/* forms */
+
+
+.formLabel,
+.detailLabel
+{
+	display: inline-block;
+	float: left;
+}
+
+.formSuccess,
+.QapTcha .dropSuccess
+{
+	padding: 5px;
+}
+
+.formRow,
+.detailRow
+{
+  background-image:url('../images/bg/bianco50perc.png');
+  background-repeat:repeat;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* DYNAMIC CONTENT RELATED */
+.dynForm,
+.dynView {
+}
+.formRow
+{
+  /* background-image:url('../images/bg/bianco50perc.png'); */
+  background-image:url('../images/bg/bianco50perc_diag.png');
+  min-height: 34px;
+}
+.formSubRow {
+	margin: 2px;
+	padding: 5px;
+}
+.refLink {
+	line-height: 35px;
+}
+.refsContainer {
+	margin: 0px;
+	margin-bottom: 5px;
+	padding: 0px;
+	position: relative;
+	right: 10px;
+}
+
+/* datatypes related */
+.imageDetail,
+.imageList
+{
+	
+}
+
+/* crud buttons */
+
+.adminButton,
+.adminIcon,
+.paginationButton
+{
+	display: inline-block;
+	/*
+	width: 24px;
+	height: 24px;
+	*/
+	width: 30px;
+	height: 30px;
+	background-repeat:no-repeat;
+	background-position:center;
+	margin: 2px;
+	padding: 0px;
+	font-size: 11px;
+	font-family: TitlesFont;
+	cursor: pointer;
+	vertical-align:middle;
+}
+
+.adminIcon
+{
+	background-color: #aaaaaa;
+	cursor: default;
+}
+.statusIcon
+{
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background-repeat:no-repeat;
+	background-position:center;
+}
+.datatypeIcon {
+	width: 50px;
+	text-align: center;
+}
+.addButton
+{
+	background-image:url('../images/pov/icon_new_20x15.png');
+}
+
+.saveButton
+{
+	width: 100px;
+	height: 30px;
+	font-size: 18px;
+	background-image:url('../images/pov/icon_save_30x23.png');
+	background-position: 5px 3px;
+	padding-left: 25px;
+}
+
+.modifyButton
+{
+	background-image:url('../images/pov/icon_modify_20x15.png');
+}
+
+.deleteButton
+{
+	background-image:url('../images/pov/icon_delete_20x15.png');
+}
+
+.unlinkButton
+{
+	background-image:url('../images/pov/icon_unlink_20x15.png');
+}
+
+.backButton
+{
+	background-image:url('../images/pov/icon_pagination_prev10pages_frontend_20x20.png');
+}
+
+.viewButton
+{
+	background-image:url('../images/pov/icon_view_one_20x20.png');
+}
+
+.allButton
+{
+	background-image:url('../images/pov/icon_view_all_20x20.png');
+}
+
+.selectButton
+{
+	background-image:url('../images/pov/icon_core_get_20x15.png');
+}
+
+.setButton
+{
+	background-image:url('../images/pov/icon_core_set_20x15.png');
+}
+
+.privateButton
+{
+	background-image:url('../images/pov/icon_data_account_20x15.png');
+}
+
+/*
+.unlinkButton
+{
+	background-image:url('../images/pov/icon_close_20x15.png');
+}
+
+.moveLeftButton
+{
+	background-image:url('../images/pov/icon_arrow_w_15x15.png');
+}
+
+.moveRightButton
+{
+	background-image:url('../images/pov/icon_arrow_e_15x15.png');
+}
+
+.moveUpButton
+{
+	background-image:url('../images/pov/icon_arrow_n_15x15.png');
+}
+
+.moveDownButton
+{
+	background-image:url('../images/pov/icon_arrow_s_15x15.png');
+}
+*/
+
+
+/* MAIN ELEMENTS BUTTONS */
+
+.elementButton,
+.elementButtonSelected
+{
+	display: inline-block;
+	height: 28px;
+	background-repeat:no-repeat;
+	background-position: 3px 4px;
+	margin: 2px;
+	padding: 0px;
+	padding-top: 2px;
+	padding-left: 35px;
+	padding-right: 10px;
+	font-size: 18px;
+	font-family: TitlesFont;
+	cursor: pointer;
+}
+
+.buttonUsers
+{
+	background-image:url('../images/pov/icon_core_role_30x23.png');
+}
+
+.buttonHelp
+{
+	background-image:url('../images/pov/icon_core_name_20x15.png');
+}
+
+
+
+
+/* PAGINATION RELATED */
+
+.paginationActualResults
+{
+	font-family: TitlesFont, Arial, Helvetica, sans-serif;
+	display: inline-block;
+	margin-top: 3px;
+	margin-right: 4px;
+}
+
+.paginationButton
+{
+}
+
+.paginationLinkFirst
+{
+	background-image:url('../images/pov/icon_pagination_first_20x20.png');
+}
+
+.paginationLinkPrev10pages
+{
+	background-image:url('../images/pov/icon_pagination_prev10pages_20x20.png');
+}
+
+.paginationLinkPrev
+{
+	background-image:url('../images/pov/icon_pagination_prev_20x20.png');
+}
+
+.paginationLinkNext
+{
+	background-image:url('../images/pov/icon_pagination_next_20x20.png');
+}
+
+.paginationLinkNext10pages
+{
+	background-image:url('../images/pov/icon_pagination_next10pages_20x20.png');
+}
+
+.paginationLinkLast
+{
+	background-image:url('../images/pov/icon_pagination_last_20x20.png');
+}
+
+.paginationBox
+{
+	right: 0px;
+}
+
+.paginationBoxTop
+{
+	position: absolute;
+	top: 30px;
+}
+
+.paginationBoxBottom
+{
+	text-align: right;
+}
+
+
+
+/* FILTERS */
+
+.filterAllOrMine
+{
+	position: absolute;
+	top: 30px;
+	right: 0px;
+}
+
+.filterBySite
+/* questi 2 hanno la stessa posizione perchè non compaiono mai assieme */
+{
+	position: absolute;
+	top: 30px;
+	right: 170px;
+}
+
+
+
+/* TABS */
+.tabsButtonsCont,
+.tabsButtonsContMini
+{
+	text-align: left;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	padding-bottom: 1px;
+}
+.tabsButtonsContMini
+{
+	text-align: right;
+	padding-bottom: 2px;
+}
+.tabButton,
+.tabButtonMini
+{
+	font-size: 22px;
+	font-weight: normal;
+	
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	
+	background-image:url('../images/bg/nero20perc.png');
+	
+	background-color: white;
+}
+.tabButtonMini
+{
+	font-size: 16px;
+}
+.tabButtonSelected
+{
+	color: white;
+	background-image:url('../images/bg/nero20perc.png');
+	border-bottom: none;
+	padding-bottom: 4px;
+	
+}
+
+
+
+
+/* JSTREE */
+.jstreeColumn {
+	text-align: left; /* annulla il right delle form rows */
+}
+.jstree
+{
+	height: 443px;
+	text-align: left;
+	display: inline-block;
+	background-color:transparent;
+	background-image:url('../images/bg/nero20perc.png');
+	background-repeat:repeat;
+	overflow:auto;
+}
+
+.jstreeStatements {
+	height: 50px;
+}
+
+.jstreeFields {
+	height: 170px;
+}
+
+.jstreeItems {
+	height: 395px;
+}
+
+.jstreeElements {
+	height: 70px;
+}
+
+.jstreeDatatypes {
+	height: 200px;
+}
+
+.jstreeOtherPage {
+	height: 250px;
+}
+
+.jstree a {
+  /* background-color: transparent; */
+  background-image: none;
+}
+
+#vakata-contextmenu
+{
+  border: none;
+}
+
+
+
+/* SIMPLEMODAL */
+
+#simplemodal-container
+{
+	-moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 1);
+	-webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, 1);
+	box-shadow: 0px 0px 30px rgba(0, 0, 0, 1);
+}
+.simplemodal-overlay {
+	background-color: black;
+	overflow: hidden;
+}
+.simplemodal-wrap, .simplemodal-data {
+	overflow: hidden;
+}
+
+
+
+/* QAPTCHA */
+
+.QapTcha {
+	text-align: left;
+	font-family: TitlesFont;
+}
+.QapTcha {
+	float:left;
+	margin-top:10px;
+	width:252px;
+}
+.QapTcha .clr{clear:both}
+.QapTcha .bgSlider {
+	width:252px;
+	height:30px;
+	float:left;
+	padding: 5px;
+	background-color:transparent;
+	background-image:url('/images/bg/nero20perc.png');
+	background-repeat:repeat;
+}
+.QapTcha .Slider {
+	width:50px;
+	height:30px;
+	background:transparent url('/images/pov/icon_pagination_next10pages_50x30.png') no-repeat;
+	cursor:e-resize;
+}
+.QapTcha .TxtStatus {
+	width:252px;
+	margin-top:7px;
+	text-align:left;
+	clear:both;
+}
+
+.QapTcha .dropSuccess {
+	color: white;
+}
+
+
+
+

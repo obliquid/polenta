@@ -1,0 +1,24 @@
+div.outerCont
+	if session.loggedIn
+		h4(title='#{session.email}') #{ trunc(session.email,25) }
+	else 
+		h4 #{__i('access')}
+	div.innerCont
+		form(method='post', action='/signin')
+			if session.loggedIn
+				a(href='/signout') #{__i('sign out')}
+				if session.user_id == 'superadmin'
+					span #{__i('super admin mode')}!
+				else
+					a(href='/users/#{session.user_id}') #{__i('your profile')}
+			else
+				span email
+				input(name='login_email').size1
+				br
+				span password
+				input(name='login_password',type='password').size1
+				br
+				input(type='submit',value='#{__i('sign in')}')
+				if app.pol.config.usersCanRegister
+					span or
+					a(href='/users/edit/new') #{__i('register')}

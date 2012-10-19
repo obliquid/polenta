@@ -1,0 +1,15 @@
+//- prima controllo se sto visualizzando una pagina che ha bisogno del menu secondario
+if session.currentPage == 'nessunapaginaperora'
+	div.headerAdminCont
+		div.headerAdmin.size6
+			div.floatLeft
+				if session.currentPage == 'sites' || session.currentPage == 'pages' || session.currentPage == 'divs'
+					if session.currentPage == 'pages'
+						a(href='/pages').floatLeft.elementButtonSelected.buttonPages #{__i('pages')}
+					else
+						a(href='/pages').floatLeft.elementButton.buttonPages #{__i('pages')}
+					if session.currentPage == 'divs'
+						a(href='/divs').floatLeft.elementButtonSelected.buttonDivs #{__i('divs')}
+					else
+						a(href='/divs').floatLeft.elementButton.buttonDivs #{__i('divs')}
+			div.clear

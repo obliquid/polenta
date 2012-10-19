@@ -1,0 +1,64 @@
+div.headerCont
+	div.header.size6
+		//logo+name
+		div.size1AndHalf.floatLeft
+			a(href='/').floatLeft
+				img(src='/images/logo/main_logo_50x50.png').floatLeft
+				h3.floatLeft.logoLabel polenta
+		//menu
+		div.floatLeft
+			if session.currentPage == 'users'
+				a(href='/users').floatLeft.elementButtonSelected.buttonUsers #{__i('users')}
+			else
+				a(href='/users').floatLeft.elementButton.buttonUsers #{__i('users')}
+		div.clear
+		//- google analytics
+		//-
+			script
+				var _gaq = _gaq || [];
+				_gaq.push(['_setAccount', 'UA-29120605-1']);
+				_gaq.push(['_setDomainName', 'weadmin.it']);
+				_gaq.push(['_trackPageview']);
+				(function() {
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				})();
+div.headerCont
+	div.headerStatus.size6
+		if session.loggedIn
+			div.headerStatusSignedIn.size5.floatLeft
+				div(style='width:30px;height:23px;').buttonUsers.floatLeft
+				h6(style='margin-bottom:0px;line-height:16px;').floatLeft #{__i('you are')}:&nbsp;&nbsp;
+				h5(title='#{session.email}',style='margin-bottom:0px;line-height:16px;').floatLeft #{ trunc(session.email,35) }&nbsp;&nbsp;&nbsp;
+				a(href='/signout') #{__i('sign out')}
+				if session.user_id == 'superadmin'
+					span #{__i('super admin mode')}!
+				else
+					a(href='/users/#{session.user_id}') #{__i('your profile')}
+		else
+			div.headerStatusSignedOut.size5.floatLeft
+				div(style='width:30px;height:23px;').buttonUsers.floatLeft
+				h4.floatLeft #{__i('you')}:&nbsp;&nbsp;&nbsp;
+				form(method='post', action='/signin').floatLeft
+					span email
+					input(name='login_email').size1
+					&nbsp;
+					span password
+					input(name='login_password',type='password').size1
+					&nbsp;
+					input(type='submit',value='#{__i('sign in')}')
+					if app.pol.config.usersCanRegister
+						span or
+						a(href='/users/edit/new') #{__i('register')}
+		//-
+			div.headerStatusMini.floatRight
+				div.headerStatusSignedIn
+					h6(style='margin-bottom:0px;line-height:16px;').floatLeft #{__i('languages')}
+					each locale in app.i18n.getLocalesNames()
+						if locale == app.i18n.getLocale()
+							span.linkSelected #{locale}
+						else
+							a(href='/lan/#{locale}') #{locale}
+		div.clear
+

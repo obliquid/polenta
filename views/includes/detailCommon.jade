@@ -1,0 +1,22 @@
+div.clear
+.outerContMinimal
+	h6.floatLeft id: 
+	span.floatRight #{element._id}
+	div.clear
+.outerContMinimal
+	h6.floatLeft  #{__i('status')}: 
+	div(class='#{element.status}Bg', title='#{__i(element.status)}').privateButton.statusIcon.floatRight
+	//p #{__i(element.status)}
+	div.clear
+if element.author
+	.outerContMinimal
+		h6.floatLeft  #{__i('author')}: 
+		if element.author.status == 'public' || session.user_id == 'superadmin'
+			a(href='/users/#{element.author._id}', title='#{__i('view')}').elementButton.buttonUsers.floatRight #{element.author.name}
+		else
+			p private
+		div.clear
+if element.created
+	.outerContMinimal
+		h6 #{__i('created')}: 
+		p #{element.created}
