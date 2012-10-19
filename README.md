@@ -26,5 +26,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
-## finally, the name, why lardo?
-because lardo is good
+## finally, the name, why polenta?
+because polenta is good...
+and cheap.
